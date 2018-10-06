@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
+import java.util.StringTokenizer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,12 +23,19 @@ public class MainController {
     private TextArea outputTextArea;
 
     @FXML
+    private TextField proxyServerAddress;
+
+    @FXML
     private void handleGoButtonAction(ActionEvent event) {
         Window owner = goButton.getScene().getWindow();
 
         ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
-        ClientWorker clientWorker = new ClientWorker(this.outputTextArea, "localhost", Integer.parseInt("7999"), inputUrl.getText());
+        StringTokenizer tokenizer = new StringTokenizer(proxyServerAddress.getText(), ":");
+        ClientWorker clientWorker = new ClientWorker(this.outputTextArea,
+                tokenizer.nextToken(),
+                Integer.parseInt(tokenizer.nextToken()),
+                inputUrl.getText());
         threadPool.execute(clientWorker);
     }
 }
