@@ -2,6 +2,8 @@ package core;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -20,6 +22,8 @@ public class ClientWorker implements Runnable {
     private String proxyServerUrl;
     private Integer proxyServerPort;
     private String url;
+
+    private String output;
 
     public ClientWorker(TextArea outputTextArea, String proxyServerUrl, Integer proxyServerPort, String url) {
         this.outputTextArea = outputTextArea;
@@ -52,9 +56,18 @@ public class ClientWorker implements Runnable {
             }
             //settings server response to GUI
             outputTextArea.setText(sb.toString());
+            this.setOutput(sb.toString());
             return;
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
     }
 }
