@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        stage.setTitle("Proxy Server");
+        stage.setTitle("Anonymizer");
         stage.setScene(new Scene(rootNode));
         stage.show();
     }

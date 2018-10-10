@@ -15,9 +15,6 @@ import java.net.Socket;
 public class ClientWorker implements Runnable {
     private static Logger log = Logger.getLogger(ClientWorker.class);
 
-    @FXML
-    private TextArea outputTextArea;
-
     private Socket socket;
     private String proxyServerUrl;
     private Integer proxyServerPort;
@@ -25,8 +22,7 @@ public class ClientWorker implements Runnable {
 
     private String output;
 
-    public ClientWorker(TextArea outputTextArea, String proxyServerUrl, Integer proxyServerPort, String url) {
-        this.outputTextArea = outputTextArea;
+    public ClientWorker(String proxyServerUrl, Integer proxyServerPort, String url) {
         this.proxyServerUrl = proxyServerUrl;
         this.proxyServerPort = proxyServerPort;
         this.url = url;
@@ -55,7 +51,8 @@ public class ClientWorker implements Runnable {
                 sb.append("\n");
             }
             //settings server response to GUI
-            outputTextArea.setText(sb.toString());
+            //outputTextArea.setText(sb.toString());
+            //System.out.println(sb.toString());
             this.setOutput(sb.toString());
             return;
         } catch (IOException e) {

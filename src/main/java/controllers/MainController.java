@@ -24,9 +24,6 @@ public class MainController {
     private Button goButton;
 
     @FXML
-    private TextArea outputTextArea;
-
-    @FXML
     private TextField proxyServerAddress;
 
     @FXML
@@ -39,16 +36,23 @@ public class MainController {
         ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
         StringTokenizer tokenizer = new StringTokenizer(proxyServerAddress.getText(), ":");
-        final ClientWorker clientWorker = new ClientWorker(this.outputTextArea,
+        final ClientWorker clientWorker = new ClientWorker(
                 tokenizer.nextToken(),
                 Integer.parseInt(tokenizer.nextToken()),
                 inputUrl.getText());
         threadPool.execute(clientWorker);
 
+        scrollPane.setContent(null);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 // if you change the UI, do it here !
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 final WebView browser = new WebView();
                 WebEngine webEngine = browser.getEngine();
                 webEngine.loadContent(clientWorker.getOutput());
